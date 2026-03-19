@@ -1,0 +1,167 @@
+---
+title: "Central Limit Theorem"
+author: "KELevasseur, SMWadgymar"
+date: '2023-03-07'
+output: html_document
+---
+
+We are going to be looking at data from the Spanish Flu. The Spanish Flu overlapped with World War I but caused more than twice as many deaths as the war itself. About one third of the world's population was infected by the virus which had a mortality rate of approximately 10%. In this activity, we will examine age at death in 1918 Switzerland during the Spanish Flu pandemic. 
+
+
+1) Here, we read in data from a csv file from a UBC website and name it "flu":
+```{r}
+flu <- read.csv(url("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter10/chap10e6AgesAtDeathSpanishFlu1918.csv"))
+```
+
+
+2) How many variables are in this dataset?
+
+How many observations?
+
+Explore the dataset using the summary function:
+```{r}
+
+```
+
+
+3) Make a histogram of age at death.
+```{r}
+
+```
+
+
+Q: How would you describe this distribution? Comment on modality, skew, and whether it appears normally distributed.
+
+A:
+
+
+
+4) Calculate the mean and sd of the data and then superimpose a normal curve over your histogram using dnorm(x, mean, sd). Annotate this code as you go using #s so that you can reference it later. Refer back to previous R activities from Unit3 for help if needed.
+
+```{r}
+mean_age = ???
+  
+sd_age = ???
+  
+hist(???, probability=T)
+x.values = seq(???)
+y.values = dnorm(???)
+lines(x.values, y.values, col='blue')
+```
+
+
+An additional way we can examine if data are normal or not is to make a qqplot. Recall our qqplot lecture.
+
+```{r}
+qqnorm(flu$age)
+qqline(flu$age)
+```
+
+Q: Explain what each line in the code chunk above produces in the plot.
+
+A:
+
+Q: Does a normal distribution seem to fit the data well according to this qqplot? Explain which parts of the qqplot help with your answer and what they indicate about the data.
+
+A: 
+
+
+
+5) We are going to use this data to demonstrate the CENTRAL LIMIT THEOREM. We will treat age at death from Switzerland in 1918 as our study population and we will take a large number of random samples from the population of age at death measurements to create a sampling distribution. Then we will plot the sample means.
+
+First, we will create our random samples. Work through the following code line by line to make sure you understand what it is doing.
+
+```{r}
+n<-4 #each sample will have a size of n=4
+
+results<-vector() #this code allows us to store the average age of each sample in this vector that I am calling 'results'. This line of code creates a blank vector that we can fill up with average values as we proceed.
+
+#the code below is for loops. It will repeat a section of code a specified number of times. In this case, we are going to loop through this code 10,000 times. Each loop through the code is designated as i, with i=1 for the first loop through i=10000 for the 10000th loop.
+
+for(i in 1:10000){
+  
+  AgeSample<-sample(flu$age, size=n, replace=F)
+
+#here we are sampling 4 values (remember n=4 above) from our population and calling it 'AgeSample'. The replace=F argument specifies that we are unable to sample the same individual data point more than once (no replacement)
+  
+  results[i]<-mean(AgeSample)
+
+#here we are calculating the mean of the sample we took in the last step and placing it in the ith spot of the results vector. For the first iteration of the loop, when i=1, the mean for that sample will go into the first spot in the results vector. When i=2, the mean for that second sample will go into the second spot in the vector, and so on. This vector will contain 10000 elements by the time the loop is done.
+}
+```
+
+
+
+6) Plot a histogram of the sample means we just created.
+
+```{r}
+
+```
+
+Plot a qqplot of the sample means we just created.
+
+```{r}
+
+```
+
+What is the mean and sd of this sampling distribution?
+
+```{r}
+
+```
+
+Q: What do you notice about this sampling distribution? How would you describe it? Is it fairly normal or not?
+
+A: 
+
+
+
+
+7) Copy the loop code from above and create a new sampling distribution that only includes 15 total samples, each of n=4. Save the values in a vector called 'results2' to differentiate this data from 'results'.
+
+```{r}
+
+```
+
+Look at the sampling distribution using a histogram.
+
+```{r}
+
+```
+
+
+Calculate the mean and sd of the new sampling distribution.
+
+```{r}
+
+```
+
+
+Q: How does the sampling distribution change when the number of samples is very low (i.e. 15 rather than 10,000)?
+
+A: 
+
+
+
+
+8) Copy the loop code from above and create a new sampling distribution that includes 10000 samples of size n=30.  Save the values in a vector called 'results3'.
+
+```{r}
+
+```
+
+Calculate the mean and sd of the new sampling distribution.
+
+```{r}
+
+```
+
+
+Q: How does the sampling distribution change when the size of each sample increases?
+
+A: 
+
+
+
+TAKE HOME POINT:
+Our sampling distribution will conform well to a normal distribution if we have a reasonably large number of samples, even in cases where the distribution of the data is moderately non-normal (THIS IS THE CENTRAL LIMIT THEOREM). Increasing the size of each sample will reduce the variation in the means of samples. 
