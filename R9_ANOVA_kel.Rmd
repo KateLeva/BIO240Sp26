@@ -1,0 +1,112 @@
+---
+title: "Introduction to ANOVA"
+author: "Dr Meier, Dr Levasseur"
+output: pdf_document
+---
+Last week, we practiced using t-tests as a method for comparing the means of two groups. In some settings, it is useful to compare the means across more than two groups. In this case, we can use an *analysis of variance (ANOVA)*.
+
+Assessing whether the means across several groups are equal by conducting a single hypothesis test rather than multiple two-sample tests is important for controlling the overall Type I error rate.
+
+Let's explore ANOVA testing with the FAMuSS dataset: Functional polymorphisms Associated with Human Muscle Size and Strength Study.
+
+### FAMuSS: comparing non-dominant arm strength according to *ACTN3* genotype
+
+QUESTION OF INTEREST: *Is change in non-dominant arm strength after resistance training associated with the ACTN3 genotype?*
+
+Over the last couple of decades, research has focused on attempting to understand the genetic influence on sports performance. This has led to the identification of a number of candidate genes which may help differentiate between elite and non-elite athletes. One of the most promising genes in this research is *ACTN3*, which has commonly been referred to as “a gene for speed”. Research has examined the influence of this gene on other performance phenotypes, including exercise adaptation, exercise recovery, and sporting injury risk. ACTN3 is a gene that encodes for alpha-actinin-3, a protein expressed only in type-II muscle fibers. 
+
+In the FAMuSS study, researchers examined the relationship between muscle strength and genotype (3 genotypes in this case: CC, CT, and TT) at a particular location on the ACTN3 gene. 
+
+Load the dataset: 
+```{r}
+library(oibiostat)
+data("famuss")
+```
+
+The percent change in non-dominant arm strength (difference in arm strength before and after resistance training), is stored as variable ndrm.ch. There are three possible genotypes (CC, CT, TT) at the r577x position on the ACTN3 gene; genotype is stored as variable actn3.r577x.
+
+
+1. We want to see if change in arm strength varies according to genotype. To visualize the data, let's plot change in arm strength (ndrm.ch) according to genotype (actn3.r577x). Fill in the code below.
+
+```{r}
+boxplot(???$??? ~ ???$???, xlab="Genotypes", ylab="Change in arm strength")
+ 
+```
+
+Describe what you see:
+
+__text answer here__
+
+
+
+2. Let's assess whether the assumptions for conducting an ANOVA are reasonably satisfied: 
+
+a) Are observations independent within and across groups? YES, it is reasonable to assume that the observations are independent within and across groups; it is unlikely that participants in the study were related, or that data collection was carried out in a way that one participant’s change in arm strength could influence another’s.
+
+b) Are the data within each group nearly normal? First subset the data according to genotype, and then plot histograms and qqplots by genotype.
+
+```{r}
+CC = subset()
+CT = subset()
+TT = subset()
+
+hist(CC$???, breaks=20)
+hist(CT$???, breaks=20)
+hist(TT$???, breaks=20)
+
+qnorm()
+qline()
+```
+
+__text answer here__
+
+
+c) Is variation within each group similar to one another?
+ 
+```{r}
+#code here 
+```
+
+__text answer here__
+
+
+
+3. Conduct a hypothesis test to address the question of interest by answering the following prompts. Let alpha = 0.05.
+
+a) Let the parameters mu_CC, mu_CT, and mu_TT represent the population mean change in non-dominant arm strength for individuals of the corresponding genotype. State the null and alternative hypotheses.
+
+__text answer here__
+
+
+b) Performing an ANOVA: Use the function aov() to compute the F-statistic, degrees of freedom, and p-value below. Name your aov test Genotype_ANOVA, and then run the summary function of your aov to view your aov details. 
+
+Also, verify that you're comfortable with what each number in the output table represents -- you may want to refer back to your notes from class. 
+
+```{r}
+Genotype_ANOVA = aov(famuss$??? ~ famuss$???) #annotate me
+summary(???) #annotate me 
+```
+
+c) State your conclusions. 
+
+__text answer here__
+
+
+
+4.Now that you have performed your ANOVA, run the TukeyHSD post hoc analysis. Refer to the end of Lecture 4.3 for notes on post hoc analysis for ANOVA.
+
+```{r}
+TukeyHSD($$$)
+```
+
+
+a) Explain the TukeyHSD output. Why do we need an adjusted p-value?
+
+__text answer here__
+
+
+
+b) Now that we've performed the post hoc analysis, what can we conclude about our research question?
+
+__text answer here__
+
