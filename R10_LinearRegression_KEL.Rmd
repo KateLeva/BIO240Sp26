@@ -1,0 +1,173 @@
+---
+title: "Intro to Linear Regression"
+author: "Kate Levasseur"
+---
+
+### Background information
+
+This lab uses data from the Prevention of REnal and Vascular END-stage Disease (PREVEND) study, which took place between 2003 and 2006 in the Netherlands. While the original study collected clinical and demographic data for 4,095 individuals (and is actually one of the datasets you could analyze for your final project!), we're just going to look at a subset of 500 individuals for ease of analyses. 
+
+As adults age, cognitive function declines over time; this is largely due to various cerebrovascular and neurodegenerative changes. The Ruff Figural Fluency Test (RFFT) is one measure of cognitive function that provides information about cognitive abilities such as planning and the ability to switch between different tasks. Scores on the RFFT range from 0 to 175 points, where higher scores are indicative of better cognitive function.
+
+The goal of this R lab is to explore the relationship between age and RFFT score in the prevend dataset.
+
+
+
+Part 1: Fitting and interpreting a least squares regression line
+_________________________________________________________________
+
+
+1. Run the following code chunk to load the prevend.samp dataset.
+
+```{r}
+library(oibiostat)
+data("prevend.samp")
+```
+
+
+
+2. a) Think about the relationship between RFFT and age. Which is the explanatory variable and which is the response variable?
+
+A:
+
+
+b) Create a scatterplot of RFFT score (RFFT) and age in years (Age) in prevend.samp.
+
+```{r}
+#Let's make a scatterplot of this:
+$$$(???$??? ~ ???$???)
+
+```
+
+c) Describe the relationship between RFFT score and Age
+
+A:
+
+
+d) Let's also calculate the correlation coefficient (r) for this relationship by running the following code. State the correlation coefficient below. Annotate what this code is doing. 
+
+```{r}
+cor(???$???, ???$???) #annotate me
+```
+
+A:
+
+
+
+
+3. a) Now, let's calculate our least squares line of best fit. Annotate what this code is doing. 
+
+```{r}
+#naming/saving best-fit line as RFFT.Age.lm  
+RFFT.Age.lm <- ???(???$??? ~ ???$???) #annotate me 
+
+RFFT.Age.lm 
+
+```
+
+b) Now add a least squares line of best fit to your scatterplot. Annotate what this code is doing. 
+
+```{r}
+plot(???$??? ~ ???$???) #annotate me 
+
+???(RFFT.Age.lm) #annotate me 
+
+```
+
+
+c) What are the slope and intercept values of the least squares line of best fit? 
+
+A:
+
+
+d) Explain the linear model in terms that a non-statistician would understand. Comment on whether the intercept value has any interpretive meaning in this setting.
+
+A:
+
+    
+e) Based on the linear model, how much does RFFT score differ, on average, between an individual who is 60 years old versus an individual who is 50 years old?
+
+A:
+
+    
+f) Is it valid to use the linear model to estimate RFFT score for an individual who is 20 years old? Explain your answer.
+
+A:
+
+
+
+
+4) Residuals are the leftover variation after the model is fit. The least squares regression line that you made minimizes variation in the residuals (specifically, it minimizes the sum of squared residuals). Let's take a look at the residuals from this linear model/least squares regression line. 
+
+First, pull the residuals out from the model using the function "resid" and name it prevent.residuals:
+
+```{r}
+#store the residuals from the linear model
+prevend.residuals = resid(RFFT.Age.lm)
+prevend.residuals
+```
+
+a) What do each of the values in prevend.residuals represent? For instance, for person 6, what does the residual -56.69767391 represent? 
+
+A:
+
+
+b) Now let's predict each person's RFFT score using the least squares regression line that we calculated (using the function "predict")
+
+```{r}
+#store the predicted values for each observation based on the linear model
+prevend.predicted = predict(RFFT.Age.lm)
+prevend.predicted
+
+```
+
+c) What RFFT score was person 6 predicted to have based on the linear model and their age? 
+
+A:
+
+
+Take a look at the actual dataset. What RFFT score did person 6 actually have? Annotate what this code is doing. 
+
+```{r}
+prevend.samp[6,c(2,6)] #annotate me
+```
+
+A:
+
+
+d) From this info, and taking another look at the scatterplot with the least squares regression line, does the residual value of -56.7 make sense for person 6? 
+
+A: 
+
+
+
+Part 2: Verifying conditions are met 
+_____________________________________
+
+5) Let's check that our linear regression conditions are met. What are the four conditions we need to verify?
+
+A:
+
+
+
+6) Residual plots help in verifying two of these conditions - which two conditions?
+
+A:
+
+
+
+
+```{r}
+#let's make a residual plot using the resid and predict:
+plot(??? ~ ???)
+
+#how do we add a horizontal line at 0?
+???(h=0)
+
+```
+
+
+7) Evaluate the four conditions.
+
+A: 
+
