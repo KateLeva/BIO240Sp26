@@ -1,0 +1,159 @@
+---
+title: "Chi Square test for the fit of a distribution"
+author: "Dr Levasseur and Dr. Meier"
+---
+
+BACKGROUND:
+
+The 595 participants in the FAMuSS study (Functional SNPs Associated with Muscle Size and Strength) were categorized into 4 racial groups: participants who identify as African American (27), Asian (55), White (467), and other (46).
+
+The participants were volunteers at a university and so did not come from a random sample of the US population.
+
+
+QUESTION 1:
+
+Are the 595 participants of the FAMuSS study representative of the general US population in terms of race? 
+
+Let's graph the data and perform a hypothesis test to evaluate this question:
+
+
+a) State your null and alternative hypotheses. 
+
+__text answer here__ 
+
+
+b) First, create a vector of observed counts for your four categories based on the FAMuSS study and name it famuss.obs. Then create a barplot of the observed count data using the code started below.
+
+
+```{r}
+famuss.obs <- ???  #participants who identify as: African American, Asian, White, Other
+
+???(???, names.arg=c("???", "???", "???", "???"), col="seagreen3") #names.arg labels your bars
+```
+
+
+Then create a vector of expected proportions (NOT counts) for these same four categories assuming the study participants are representative of the US population (these proportions have been filled in for you based on US census data).
+
+```{r}
+famuss.exp.prop <- c(0.128, 0.01, 0.804, 0.058) #US population proportions based on the US census for each racial group
+```
+
+
+Use the following code to determine what the expected COUNTS are for these four categories based on our FAMuSS sample size and expected proportions:
+
+```{r}
+famuss.exp.count <- chisq.test(x=famuss.obs, p=famuss.exp.prop)$expected
+
+famuss.exp.count
+```
+
+
+Now let's create a contingency table of our observed vs expected counts. Code is filled in for you, but take a look at each line to understand what's happening.
+
+```{r}
+tab <- matrix(c(27,55,467,46,76.1,5.95,478.38,34.51), ncol=4, byrow=T)
+colnames(tab) <- c("Afr Am", "Asian", "White", "Other")
+rownames(tab) <- c("Obs", "Exp")
+table.famuss <- as.table(tab)
+
+table.famuss
+```
+
+
+Once we have our contingency table, we can plot our data in a grouped barplot (to compare observed vs expected counts by race):
+
+```{r}
+???(???, col=c("seagreen3", "salmon"), ylab="Frequency", legend=rownames(table.famuss), beside=T)  #if you remove the beside=T part, you get a stacked barplot! But that's less useful here when we want to compare counts
+```
+
+
+
+
+Now let's move on to the Chi-squared test. The assumptions for a Chi-Square test for fit of distribution are 1. independent observations and 2. at least 5 counts for each cell. The degrees of freedom = # of categories - 1.
+
+c) Verify these assumptions. 
+
+__text answer here__  
+
+
+d) How many degrees of freedom are there? 
+
+__text answer here__ 
+
+
+e) Run a Chi-Square test for the fit of a distribution by running the following code where the first argument is observed counts and the second argument is expected proportions (Hint: use saved names). State the test statistic, p-value, and your conclusions based on the results of the test. 
+
+```{r}
+chisq.test(x=???, p=???) #x=observed counts per cell, p=expected probabilities/proportions per cell 
+```
+
+__text answer here__ 
+
+
+f) To see which groups of participants are contributing most to the p-value (i.e. are substantially over- or under-represented), let's look at the residuals with the following code. 
+
+```{r}
+chisq.test(x=???, p=???)$residuals
+```
+
+Which group(s) counts were most different from expected? 
+
+__text answer here__ 
+
+
+
+---------------------------------------------------------------------
+
+QUESTION 2:
+
+According to Mendelian genetics, alleles segregate independently. If an individual is heterozygous for a gene and has alleles A and B, then the alleles have an equal chance of being passed to an offspring. Under this framework, if two individuals with genotype AB mate, then their offspring are expected to exhibit a 1:2:1 genotypic ratio (recall Punnett Squares); 25% of the offspring will be AA, 50% will be AB, and 25% will be BB.
+
+The term "segregation distortion" refers to a deviation from expected Mendelian frequencies. Let's investigate this in the model plant: Arabidopsis.
+
+
+At a specific gene locus in the plant Arabidopsis thaliana, researchers have observed 84 AA individuals, 233 AB individuals, and 134 BB individuals. Is there evidence of segregation disorder at this locus? Conduct the test at α = 0.0001 to account for multiple testing, since the original study examined approximately 250 locations across the genome.
+
+a) What proportion of individuals would we expect to have the AA, AB, and BB genotypes? 
+
+__text answer here__ 
+
+
+b) Calculate the expected number of individuals for each genotype and then create a grouped barplot as above.
+
+```{r}
+#code here 
+```
+
+
+c) State your hypotheses. 
+
+__text answer here__ 
+
+
+d) Verify necessary assumptions. 
+
+__text answer here__ 
+
+
+e) How many degrees of freedom are there? 
+
+__text answer here__ 
+
+
+f) Run a Chi Square Test for the fit of a distribution. State the test statistic, p-value, and your conclusions based on the results of the test.
+
+```{r}
+#code here 
+```
+
+__text answer here__ 
+
+
+g) Calculate the residuals to see which genotypes deviated most from what we would expect. 
+
+```{r}
+#code here 
+```
+
+
+
